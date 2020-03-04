@@ -9,7 +9,7 @@ export default class SearchNavigator extends React.Component {
     return (
       <Stack.Navigator>
         <Stack.Screen name="Search" component={SearchPage} />
-        <Stack.Screen name="Fruit" component={MovieInfo} />
+        {/* <Stack.Screen name="Movie" component={MovieInfo} /> */}
       </Stack.Navigator>
     );
   }
