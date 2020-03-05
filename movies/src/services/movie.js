@@ -1,4 +1,4 @@
-const API_KEY = '927630c151c75b4351d1ff5de9e9abd7';
+const API_KEY = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5Mjc2MzBjMTUxYzc1YjQzNTFkMWZmNWRlOWU5YWJkNyIsInN1YiI6IjVlNTZlNjJlYTZkOTMxMDAxMjViYjMxOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.8PvBMgdamnBtWfRaw0vb5ZRdy36zW4vtVUEUtPkNSds';
 const ROOT_URL = 'https://api.themoviedb.org/3';
 
 export default class MoviesService {
