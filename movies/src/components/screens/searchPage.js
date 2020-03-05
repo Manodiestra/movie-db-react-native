@@ -25,7 +25,12 @@ export default class SearchPage extends React.Component {
 
   constructor() {
     super();
-    this.getMoviesFromSearchQuery = _.debounce(this.getMoviesFromSearchQuery, 1000)
+    // .debounce() is a lowdash function that will wait the specified amount of
+    // idle time to pass before the function passed to it runs again
+    this.getMoviesFromSearchQuery = _.debounce(
+      this.getMoviesFromSearchQuery,
+      1000,
+    );
   }
 
   getMoviesFromSearchQuery = async () => {
@@ -38,7 +43,9 @@ export default class SearchPage extends React.Component {
   };
 
   async componentDidUpdate(prevProps, prevState) {
-    if (prevState.searchTerm === this.state.searchTerm) return;
+    if (prevState.searchTerm === this.state.searchTerm) {
+      return;
+    }
     this.getMoviesFromSearchQuery();
   }
 
