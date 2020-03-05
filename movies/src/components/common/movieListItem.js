@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Image} from 'react-native';
 
 export default class MovieListItem extends React.Component {
   styles = StyleSheet.create({
@@ -11,6 +11,10 @@ export default class MovieListItem extends React.Component {
       flex: 1,
       padding: 16,
     },
+    coverImage: {
+      width: 130,
+      height: 130,
+    },
     listItem: {
       flex: 2,
       padding: 16,
@@ -20,7 +24,10 @@ export default class MovieListItem extends React.Component {
     },
   });
   getBeginningOfOverview(someWords) {
-    return someWords.substring(0, 70) + '...';
+    return someWords.substring(0, 80) + '...';
+  }
+  getCoverArtUri() {
+    return 'http://image.tmdb.org/t/p/w342' + this.props.movie.backdrop_path;
   }
 
   render() {
@@ -28,7 +35,12 @@ export default class MovieListItem extends React.Component {
     return (
       <View style={this.styles.container}>
         <View style={this.styles.coverArt}>
-          <Text>an image</Text>
+          <Image
+            source={{
+              uri: this.getCoverArtUri(),
+            }} 
+            style = {this.styles.coverImage}
+          />
         </View>
         <View style={this.styles.listItem}>
           <Text style={this.styles.movieTitle}>{this.props.movie.title}</Text>
