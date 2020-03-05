@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 
 export default class MovieListItem extends React.Component {
   styles = StyleSheet.create({
@@ -33,13 +33,20 @@ export default class MovieListItem extends React.Component {
   render() {
     console.log('the movie prop', this.props.movie);
     return (
-      <View style={this.styles.container}>
+      <TouchableOpacity
+        style={this.styles.container}
+        onPress={() => {
+          console.log('this.props', Object.keys(this.props));
+          this.props.navigation.navigate('Movie Info', {
+            movie: this.props.movie,
+          });
+        }}>
         <View style={this.styles.coverArt}>
           <Image
             source={{
               uri: this.getCoverArtUri(),
-            }} 
-            style = {this.styles.coverImage}
+            }}
+            style={this.styles.coverImage}
           />
         </View>
         <View style={this.styles.listItem}>
@@ -53,7 +60,7 @@ export default class MovieListItem extends React.Component {
             Overview: {this.getBeginningOfOverview(this.props.movie.overview)}
           </Text>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 }
