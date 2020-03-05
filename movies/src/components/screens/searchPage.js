@@ -50,8 +50,6 @@ export default class SearchPage extends React.Component {
   }
 
   loadMoreMovies = () => {
-    console.log('LOAD MORE MOVIES CALLED', this.state.currentPage);
-
     if (this.state.loading) {
       return;
     }
@@ -82,7 +80,6 @@ export default class SearchPage extends React.Component {
   };
 
   render() {
-    console.log('beginning props', Object.keys(this.props));
     return (
       <SafeAreaView style={this.styles.container}>
         <TextInput
@@ -95,7 +92,12 @@ export default class SearchPage extends React.Component {
         <FlatList
           data={this.state.movies}
           renderItem={dataEntry => {
-            return <MovieListItem movie={dataEntry.item} navigation={this.props.navigation} />;
+            return (
+              <MovieListItem
+                movie={dataEntry.item}
+                navigation={this.props.navigation}
+              />
+            );
           }}
           onEndReached={this.loadMoreMovies}
           keyExtractor={movie => `movie_${movie.id}`}

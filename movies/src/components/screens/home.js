@@ -17,10 +17,6 @@ export default class FruitsPage extends React.Component {
     ],
   };
 
-  componentDidMount() {
-    
-  }
-
   render() {
     return (
       <Container>

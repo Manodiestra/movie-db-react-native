@@ -27,16 +27,14 @@ export default class MovieListItem extends React.Component {
     return someWords.substring(0, 80) + '...';
   }
   getCoverArtUri() {
-    return 'http://image.tmdb.org/t/p/w342' + this.props.movie.backdrop_path;
+    return 'http://image.tmdb.org/t/p/w185' + this.props.movie.backdrop_path;
   }
 
   render() {
-    console.log('the movie prop', this.props.movie);
     return (
       <TouchableOpacity
         style={this.styles.container}
         onPress={() => {
-          console.log('this.props', Object.keys(this.props));
           this.props.navigation.navigate('Movie Info', {
             movie: this.props.movie,
           });
