@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import {SafeAreaView, Text, FlatList, ScrollView, StyleSheet, TextInput} from 'react-native';
+import {Picker, Form} from 'native-base';
 import MoviesService from './../../services/movie';
 import MovieListItem from './../common/movieListItem';
 
@@ -8,12 +9,17 @@ export default class SearchPage extends React.Component {
   state = {
     currentPage: 1,
     movies: [],
+    people: [],
     loading: true,
     allLoaded: false,
     searchTerm: '',
+    selected: 'movies',
   };
 
   styles = StyleSheet.create({
+    picker: {
+      width: 120,
+    },
     container: {
       flex: 1,
     },
@@ -34,11 +40,13 @@ export default class SearchPage extends React.Component {
   }
 
   getMoviesFromSearchQuery = async () => {
-    try {
-      const movies = await MoviesService.search(this.state.searchTerm, 1);
-      this.setState({movies, loading: false, currentPage: 1});
-    } catch (e) {
-      console.log(e);
+    if (this.state.selected === 'movies') {
+      try {
+        const movies = await MoviesService.search(this.state.searchTerm, 1);
+        this.setState({movies, loading: false, currentPage: 1});
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
 
@@ -79,16 +87,39 @@ export default class SearchPage extends React.Component {
     });
   };
 
+  onValueChange(value) {
+    this.setState({
+      currentPage: 1,
+      movies: [],
+      people: [],
+      loading: true,
+      allLoaded: false,
+      searchTerm: '',
+      selected: value,
+    });
+  }
+
   render() {
     return (
       <SafeAreaView style={this.styles.container}>
-        <TextInput
-          value={this.state.searchTerm}
-          style={this.styles.textInput}
-          onChangeText={newText =>
-            this.setState({searchTerm: newText, movies: []})
-          }
-        />
+        <Form>
+          <Picker
+            note
+            mode="dropdown"
+            style={this.styles.picker}
+            selectedValue={this.state.selected}
+            onValueChange={this.onValueChange.bind(this)}>
+            <Picker.Item label="Movies" value="movies" />
+            <Picker.Item label="People" value="people" />
+          </Picker>
+          <TextInput
+            value={this.state.searchTerm}
+            style={this.styles.textInput}
+            onChangeText={newText =>
+              this.setState({searchTerm: newText, movies: []})
+            }
+          />
+        </Form>
         <FlatList
           data={this.state.movies}
           renderItem={dataEntry => {
