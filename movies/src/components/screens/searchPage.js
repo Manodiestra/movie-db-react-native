@@ -15,7 +15,7 @@ export default class SearchPage extends React.Component {
     loading: true,
     allLoaded: false,
     searchTerm: '',
-    selected: 'movies',
+    selected: 'people',
   };
 
   styles = StyleSheet.create({

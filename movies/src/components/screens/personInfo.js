@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image, Dimensions, ScrollView} from 'react-native';
+import {View, Text, StyleSheet, Image, Dimensions, ScrollView, FlatList} from 'react-native';
 import PersonDetails from '../../services/personDetails';
 
 export default class PersonInfo extends React.Component {
@@ -18,11 +18,14 @@ export default class PersonInfo extends React.Component {
       fontSize: 32,
     },
   });
-  getCoverArtUri() {
+  getPortrait() {
     return (
       'http://image.tmdb.org/t/p/w342' +
       this.props.route.params.person.profile_path
     );
+  }
+  getCoverArtUri(path) {
+    return 'http://image.tmdb.org/t/p/w342' + path;
   }
   getGender(gender) {
     switch (gender) {
@@ -62,7 +65,7 @@ export default class PersonInfo extends React.Component {
         <View>
           <Image
             source={{
-              uri: this.getCoverArtUri(),
+              uri: this.getPortrait(),
             }}
             style={this.styles.coverImage}
           />
@@ -79,8 +82,18 @@ export default class PersonInfo extends React.Component {
           <FlatList
             data={this.props.route.params.person.known_for}
             renderItem={item => {
+              console.log(item);
               return (
-                <Text>{item.item.title}</Text>
+                <View>
+                  <Text style={this.styles.title}>{item.item.title}</Text>
+                  <Text>{item.item.release_date}</Text>
+                  <Image
+                    source={{
+                      uri: this.getCoverArtUri(item.item.backdrop_path),
+                    }}
+                    style={this.styles.coverImage}
+                  />
+                </View>
               );
             }}
             keyExtractor={item => `movie_${item.title}`}
