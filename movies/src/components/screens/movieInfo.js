@@ -21,7 +21,7 @@ export default class MovieInfo extends React.Component {
     );
   }
   render() {
-    console.log('people search', Object.keys(this.props.route.params.movie))
+    console.log('people search', Object.keys(this.props.route.params.movie));
     return (
       <>
         <View>

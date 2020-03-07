@@ -1,19 +1,24 @@
 import React from 'react';
 import _ from 'lodash';
 import {SafeAreaView, Text, FlatList, ScrollView, StyleSheet, TextInput} from 'react-native';
-import MoviesService from './../../services/movie';
 import MovieListItem from './../common/movieListItem';
+import GenreQuery from './../../services/genreQuery';
 
 export default class SearchPage extends React.Component {
   state = {
     currentPage: 1,
-    movies: [],
+    movies: null,
     loading: true,
     allLoaded: false,
     searchTerm: '',
   };
 
   styles = StyleSheet.create({
+    loadingMessage: {
+      fontSize: 32,
+      alignSelf: 'center',
+      textAlignVertical: 'center',
+    },
     container: {
       flex: 1,
     },
@@ -31,7 +36,10 @@ export default class SearchPage extends React.Component {
 
   getMoviesFromSearchQuery = async () => {
     try {
-      const movies = await MoviesService.search(this.state.searchTerm, 1);
+      const movies = await GenreQuery.query(
+        this.props.route.params.genre.id,
+        1,
+      );
       this.setState({movies, loading: false, currentPage: 1});
     } catch (e) {
       console.log(e);
@@ -52,7 +60,7 @@ export default class SearchPage extends React.Component {
 
     this.setState({loading: true}, async () => {
       try {
-        const newMovies = await MoviesService.search(
+        const newMovies = await GenreQuery.search(
           this.state.searchTerm,
           this.state.currentPage + 1,
         );
@@ -91,9 +99,13 @@ export default class SearchPage extends React.Component {
   }
 
   render() {
+    if (this.state.movies === null) {
+      return (
+        <Text style={this.styles.loadingMessage}>Loading Movies</Text>
+      )
+    }
     return (
       <SafeAreaView style={this.styles.container}>
-        <Text>{this.props.route.params.genre.name}</Text>
         {this.getListData()}
       </SafeAreaView>
     );

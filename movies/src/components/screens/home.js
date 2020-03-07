@@ -13,7 +13,6 @@ export default class FruitsPage extends React.Component {
   async getMovies() {
     try {
       let genres = await GenreService.getGenres();
-      console.log('genres', genres);
       this.setState({genres});
     } catch (e) {
       console.log(e);
