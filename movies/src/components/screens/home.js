@@ -34,8 +34,8 @@ export default class FruitsPage extends React.Component {
               <ListItem
                 button
                 onPress={() => {
-                  this.props.navigation.navigate('Movie Info', {
-                    fruit: itemData.item,
+                  this.props.navigation.navigate('Genre List', {
+                    genre: itemData.item,
                   });
                 }}>
                 <Text>{itemData.item.name}</Text>
