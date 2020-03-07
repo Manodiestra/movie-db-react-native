@@ -4,7 +4,7 @@ const ROOT_URL = 'https://api.themoviedb.org/3';
 export default class PeopleService {
   static async search(searchTerm, pageNumber = 1) {
     const result = await fetch(
-      `${ROOT_URL}/search/people?query=${searchTerm}&page=${pageNumber}`,
+      `${ROOT_URL}/search/person?query=${searchTerm}&page=${pageNumber}`,
       {
         headers: {
           Authorization: `Bearer ${API_KEY}`,

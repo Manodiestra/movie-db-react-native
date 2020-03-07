@@ -23,24 +23,21 @@ export default class PersonListItem extends React.Component {
       fontSize: 24,
     },
   });
-  getBeginningOfOverview(someWords) {
-    return someWords.substring(0, 80) + '...';
-  }
   getCoverArtUri() {
-    return 'http://image.tmdb.org/t/p/w185' + this.props.person.backdrop_path;
+    return 'http://image.tmdb.org/t/p/w185' + this.props.person.profile_path;
   }
 
   render() {
+    console.log('props keys', Object.keys(this.props.person));
     return (
       <TouchableOpacity
         style={this.styles.container}
-        // onPress={() => {
-        //   this.props.navigation.navigate('Movie Info', {
-        //     person: this.props.person,
-        //   });
-        // }}
-        >
-        {/* <View style={this.styles.coverArt}>
+        onPress={() => {
+          this.props.navigation.navigate('Person Info', {
+            person: this.props.person,
+          });
+        }}>
+        <View style={this.styles.coverArt}>
           <Image
             source={{
               uri: this.getCoverArtUri(),
@@ -49,17 +46,10 @@ export default class PersonListItem extends React.Component {
           />
         </View>
         <View style={this.styles.listItem}>
-          <Text style={this.styles.movieTitle}>{this.props.movie.title}</Text>
-          <Text>Released: {this.props.movie.release_date}</Text>
-          <Text>
-            Rating: {this.props.movie.vote_average}/10 
-            ({this.props.movie.vote_count})
-          </Text>
-          <Text>
-            Overview: {this.getBeginningOfOverview(this.props.movie.overview)}
-          </Text>
-        </View> */}
-        <Text>Person Person Person</Text>
+          <Text style={this.styles.movieTitle}>{this.props.person.name}</Text>
+          <Text>Gender: {this.props.person.gender}</Text>
+          <Text>Popularity: {this.props.person.popularity}</Text>
+        </View>
       </TouchableOpacity>
     );
   }

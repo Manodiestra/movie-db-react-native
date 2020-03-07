@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, FlatList} from 'react-native';
+import {SafeAreaView, FlatList, StyleSheet} from 'react-native';
 // This is how you get flex grid with native base
 // import { Col, Row, Grid } from 'react-native-easy-grid';
 import {Container, Text, ListItem} from 'native-base';
@@ -9,6 +9,12 @@ export default class FruitsPage extends React.Component {
   state = {
     genres: [],
   };
+
+  styles = StyleSheet.create({
+    genreName: {
+      fontSize: 24,
+    },
+  });
 
   async getMovies() {
     try {
@@ -37,7 +43,7 @@ export default class FruitsPage extends React.Component {
                     genre: itemData.item,
                   });
                 }}>
-                <Text>{itemData.item.name}</Text>
+                <Text style={this.styles.genreName}>{itemData.item.name}</Text>
               </ListItem>
             );
           }}

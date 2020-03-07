@@ -5,6 +5,7 @@ import {Picker, Form} from 'native-base';
 import MoviesService from './../../services/movie';
 import PeopleService from './../../services/people';
 import MovieListItem from './../common/movieListItem';
+import PersonListItem from './../common/personListItem';
 
 export default class SearchPage extends React.Component {
   state = {
@@ -14,7 +15,7 @@ export default class SearchPage extends React.Component {
     loading: true,
     allLoaded: false,
     searchTerm: '',
-    selected: 'movies',
+    selected: 'people',
   };
 
   styles = StyleSheet.create({
@@ -53,7 +54,6 @@ export default class SearchPage extends React.Component {
       case 'people':
         try {
           const people = await PeopleService.search(this.state.searchTerm, 1);
-          console.log('people', people);
           this.setState({people, loading: false, currentPage: 1});
         } catch (e) {
           console.log(e);
