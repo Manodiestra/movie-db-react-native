@@ -15,7 +15,7 @@ export default class SearchPage extends React.Component {
     loading: true,
     allLoaded: false,
     searchTerm: '',
-    selected: 'people',
+    selected: 'movies',
   };
 
   styles = StyleSheet.create({
@@ -129,7 +129,6 @@ export default class SearchPage extends React.Component {
           />
         );
       case 'people':
-        console.log('people case');
         return (
           <FlatList
             data={this.state.people}

@@ -28,7 +28,6 @@ export default class PersonListItem extends React.Component {
   }
 
   render() {
-    console.log('props keys', Object.keys(this.props.person));
     return (
       <TouchableOpacity
         style={this.styles.container}
