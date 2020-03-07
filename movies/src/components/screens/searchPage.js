@@ -3,6 +3,7 @@ import _ from 'lodash';
 import {SafeAreaView, Text, FlatList, ScrollView, StyleSheet, TextInput} from 'react-native';
 import {Picker, Form} from 'native-base';
 import MoviesService from './../../services/movie';
+import PeopleService from './../../services/people';
 import MovieListItem from './../common/movieListItem';
 
 export default class SearchPage extends React.Component {
@@ -40,13 +41,23 @@ export default class SearchPage extends React.Component {
   }
 
   getMoviesFromSearchQuery = async () => {
-    if (this.state.selected === 'movies') {
-      try {
-        const movies = await MoviesService.search(this.state.searchTerm, 1);
-        this.setState({movies, loading: false, currentPage: 1});
-      } catch (e) {
-        console.log(e);
-      }
+    switch (this.state.selected) {
+      case 'movies':
+        try {
+          const movies = await MoviesService.search(this.state.searchTerm, 1);
+          this.setState({movies, loading: false, currentPage: 1});
+        } catch (e) {
+          console.log(e);
+        }
+        break;
+      case 'people':
+        try {
+          const people = await PeopleService.search(this.state.searchTerm, 1);
+          console.log('people', people);
+          this.setState({people, loading: false, currentPage: 1});
+        } catch (e) {
+          console.log(e);
+        }
     }
   };
 
@@ -99,6 +110,44 @@ export default class SearchPage extends React.Component {
     });
   }
 
+  getListData() {
+    switch (this.state.selected) {
+      case 'movies':
+        return (
+          <FlatList
+            data={this.state.movies}
+            renderItem={dataEntry => {
+              return (
+                <MovieListItem
+                  movie={dataEntry.item}
+                  navigation={this.props.navigation}
+                />
+              );
+            }}
+            onEndReached={this.loadMoreMovies}
+            keyExtractor={movie => `movie_${movie.id}`}
+          />
+        );
+      case 'people':
+        console.log('people case');
+        return (
+          <FlatList
+            data={this.state.people}
+            renderItem={dataEntry => {
+              return (
+                <PersonListItem
+                  person={dataEntry.item}
+                  navigation={this.props.navigation}
+                />
+              );
+            }}
+            onEndReached={this.loadMoreMovies}
+            keyExtractor={movie => `movie_${movie.id}`}
+          />
+        );
+    }
+  }
+
   render() {
     return (
       <SafeAreaView style={this.styles.container}>
@@ -120,19 +169,7 @@ export default class SearchPage extends React.Component {
             }
           />
         </Form>
-        <FlatList
-          data={this.state.movies}
-          renderItem={dataEntry => {
-            return (
-              <MovieListItem
-                movie={dataEntry.item}
-                navigation={this.props.navigation}
-              />
-            );
-          }}
-          onEndReached={this.loadMoreMovies}
-          keyExtractor={movie => `movie_${movie.id}`}
-        />
+        {this.getListData()}
       </SafeAreaView>
     );
   }

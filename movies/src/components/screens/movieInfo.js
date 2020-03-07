@@ -21,6 +21,7 @@ export default class MovieInfo extends React.Component {
     );
   }
   render() {
+    console.log('people search', Object.keys(this.props.route.params.movie))
     return (
       <>
         <View>
@@ -35,10 +36,14 @@ export default class MovieInfo extends React.Component {
           <Text style={this.styles.title}>{this.props.route.params.movie.title}</Text>
           <Text>Released: {this.props.route.params.movie.release_date}</Text>
           <Text>
-            Rating: {this.props.route.params.movie.vote_average}/10 
-            ({this.props.route.params.movie.vote_count})
+            Rating: {this.props.route.params.movie.vote_average}/10
+             ({this.props.route.params.movie.vote_count})
           </Text>
+          <Text>Popularity: {this.props.route.params.movie.popularity}</Text>
           <Text>Overview: {this.props.route.params.movie.overview}</Text>
+        </View>
+        <View>
+          <Text>People</Text>
         </View>
       </>
     );

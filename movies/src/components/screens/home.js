@@ -3,25 +3,32 @@ import {SafeAreaView, FlatList} from 'react-native';
 // This is how you get flex grid with native base
 // import { Col, Row, Grid } from 'react-native-easy-grid';
 import {Container, Text, ListItem} from 'native-base';
+import GenreService from '../../services/genres';
 
 export default class FruitsPage extends React.Component {
   state = {
-    movies: [
-      'Dinosaur',
-      'el gordo',
-      'swis family robinsons',
-      'kdiown oiwd',
-      'Star Wars',
-      'Avengers',
-      'Tarzan',
-    ],
+    genres: [],
   };
+
+  async getMovies() {
+    try {
+      let genres = await GenreService.getGenres();
+      console.log('genres', genres);
+      this.setState({genres});
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  componentDidMount() {
+    this.getMovies();
+  }
 
   render() {
     return (
       <Container>
         <FlatList
-          data={this.state.movies}
+          data={this.state.genres}
           renderItem={itemData => {
             return (
               <ListItem
@@ -31,11 +38,11 @@ export default class FruitsPage extends React.Component {
                     fruit: itemData.item,
                   });
                 }}>
-                <Text>{itemData.item}</Text>
+                <Text>{itemData.item.name}</Text>
               </ListItem>
             );
           }}
-          keyExtractor={fruit => fruit}
+          keyExtractor={item => item.id + '' + item.name}
         />
       </Container>
     );
