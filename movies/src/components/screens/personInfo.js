@@ -17,6 +17,9 @@ export default class PersonInfo extends React.Component {
     title: {
       fontSize: 32,
     },
+    movieTitle: {
+      fontSize: 24,
+    }
   });
   getPortrait() {
     return (
@@ -85,7 +88,7 @@ export default class PersonInfo extends React.Component {
               console.log(item);
               return (
                 <View>
-                  <Text style={this.styles.title}>{item.item.title}</Text>
+                  <Text style={this.styles.movieTitle}>{item.item.title}</Text>
                   <Text>{item.item.release_date}</Text>
                   <Image
                     source={{
